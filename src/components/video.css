@@ -1,0 +1,17 @@
+/* 
+.video-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 97vw;
+    height: 70vh;
+    margin-bottom: 3%;
+    object-fit: fill;
+}
+.video-styles{
+    margin-right: 35%;
+    max-width: 100%;
+    width: 40%;
+    height: 100%;
+    object-fit: fill;
+} */
