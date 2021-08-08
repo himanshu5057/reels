@@ -3,38 +3,53 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../Context/SignMethod';
 import { database, storage } from './firebase';
+import Alert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
 import logo from './personlogo.jpg'
 import { display } from '@material-ui/system';
+import Error from './Error';
 const useStyles = makeStyles((theme) => ({
     container: {
         overflow: "hidden",
         // backgroundColor: "#C6FFDD",
-        backgroundColor: "#5c57a6",
+        // backgroundColor: "#5c57a6",
+        backgroundColor:"#253f52",
         height: "100vh",
         width: "100vw",
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        // justifyContent: "center",
+        // alignItems: "center",
         margin: "0px",
         padding: "0px"
+    },
+    left:{
+        width:"60%",
+        height:"100%",
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
 
     },
+    right:{
+        width:"40%",
+        height:"100%",
+    },
     form: {
+        
         display: "flex",
+        position:"relative",
         justifyContent: "center",
+        // paddingTop:"30%",
         flexDirection: "column",
         alignItems: "center",
-        width: "40%",
+        width: "100%",
         height: "100%",
-        // padding: "5%",
         // paddingLeft:"7%",
         borderRadius: "00px",
         backgroundColor: "#e2e7f4",
-        marginLeft: "60%"
 
     },
-
+    
     TextField: {
         padding: "7%",
         display: 'flex',
@@ -46,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#e85985",
         marginTop: "3%",
         marginLeft: "8%",
+        marginBottom:"1%",
         height: "6%",
         width: "20%",
         borderRadius: "20px",
@@ -58,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
     signup:{
         display:"flex",
         flexDirection:"row"
+    },
+    error:{
+        marginTop:theme.spacing(2)
     }
 
 
@@ -81,11 +100,16 @@ function Signin() {
             history.push("/");
         }
         catch (err) {
-            setError(err.message);
+            if(err.message=="There is no user record corresponding to this identifier. The user may have been deleted."){
+                setError("User doesn't exist");
+            }
+            else{
+                setError(err.message);
+            }
             console.log(err);
             setTimeout(() => {
                 setError("");
-            }, 2000);
+            }, 300000);
             setLoading(false);
         }
     }
@@ -97,22 +121,31 @@ function Signin() {
       },[])
     return (
         <div className={classes.container}>
-            <div className={classes.form}>
-                <form onSubmit={onSubmit}>
-                    <div className={classes.TextField}>
-                        <TextField size="small" type="text" value={email} onChange={(e) => setEmail(e.target.value)} id="outlined-basic" label="Email" variant="outlined" />
-                    </div>
-                    <div className={classes.TextField}>
-                        <TextField size="small" id="outlined-basic" label="Password" variant="outlined" type="password" value={pswd} onChange={(e) => setPswd(e.target.value)} />
-                    </div>
-                </form>
-                <button className={classes.login} type="submit" disabled={isLoading} onClick={onSubmit} >Sign in</button>
-                <div className={classes.signup}>
-                    <h5>Don't have an account?</h5>
-                    
-                    <h5 style={{color: "blue",paddingLeft:"5px"}}>Signup</h5>
-                </div>
                 
+            <div className={classes.left}>
+                <img src="https://cdn.dribbble.com/users/652746/screenshots/1773134/kino_01.gif" width="500px" height="500px" alt ="Height"></img>
+
+            </div>
+            <div className={classes.right}>
+                <div className={classes.form}>
+                <Error classN='signin' error={error}></Error>
+                    <form className={classes.signinForm} onSubmit={onSubmit}>
+                    
+                        <div className={classes.TextField}>
+                            <TextField size="small" type="text" value={email} onChange={(e) => setEmail(e.target.value)} id="outlined-basic" label="Email" variant="outlined" />
+                        </div>
+                        <div className={classes.TextField}>
+                            <TextField size="small" id="outlined-basic" label="Password" variant="outlined" type="password" value={pswd} onChange={(e) => setPswd(e.target.value)} />
+                        </div>
+                    </form>
+                    <button className={classes.login} type="submit" disabled={isLoading} onClick={onSubmit} >Sign in</button>
+                    
+                    
+                    <div className={classes.signup}>
+                        <h5>Don't have an account?</h5>
+                        <h5 onClick={()=>{history.push('/signup')}} style={{color: "blue",paddingLeft:"5px",cursor:"pointer"}}>Sign Up</h5>
+                    </div>
+                </div>
             </div>
         </div>
     )

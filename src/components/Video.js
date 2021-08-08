@@ -3,14 +3,20 @@ import './Posts.css';
 import ReactDOM from 'react-dom';
 
 function Video(props) {
+    let play=false;
     const handleMute=(e)=>{
         e.preventDefault();
-        e.target.muted=!e.target.muted;
+        
+        if(e.target.paused)
+            e.target.play();
+        else{
+            e.target.pause();
+        }
+        // e.target.muted=!e.target.muted;
     }
     const handleAutoScroll= (e)=>{
         try{
         let next = ReactDOM.findDOMNode(e.target).parentNode.nextSibling;
-        console.log(2);
         if(next)
         {
             next.scrollIntoView({behaviour:'smooth'});
@@ -22,7 +28,7 @@ function Video(props) {
     }
     return (
         <>
-            <video onEnded={handleAutoScroll} src={props.source} className="video-styles" controls onClick={handleMute} muted="muted" type="videos/mp4" ></video>
+            <video onEnded={handleAutoScroll} src={props.source} className="video-styles" id={props.id} onClick={handleMute} muted="muted" type="videos/mp4" ></video>
         </>
     )
 }

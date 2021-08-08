@@ -7,7 +7,7 @@ function Videos(props) {
     }
     return (
         <>
-            <video className="video-styles" onClick={handleMute} controls muted="muted" type="video/mp4" src={props.source}>
+            <video className="video-styles" onClick={handleMute} muted="muted" type="video/mp4" src={props.source}>
                 <source src={props.source}></source>
             </video>
         </>

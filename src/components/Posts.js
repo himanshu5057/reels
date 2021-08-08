@@ -17,9 +17,9 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import Video from './Video';
 import { database } from './firebase';
 import  ReactDOM  from 'react-dom';
-// import Likes from './Likes';
-// import AddComment from './AddComment';
-// import Comments from './Comments';
+import Likes from './Likes';  
+import AddComment from './AddComment';
+import Comments from './Comments';
 const useStyles = makeStyles((theme)=>({
     root: {
       width: '100%',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme)=>({
     },
     ci:{
     
-      color: 'white',
+      color: 'blue',
       left:'9%',
       cursor:'pointer'
     },
@@ -75,6 +75,12 @@ function Posts({userData=null}) {
   const [openId, setOpenId] = useState(null);
   const handleClickOpen = (id) => {
     setOpenId(id);
+    let videoElement=document.querySelectorAll(".videos");
+    videoElement.forEach((data)=>{
+      if(!data.childNodes[1].pause()){
+        data.childNodes[1].pause()
+      }
+    })
   };
   const handleClose = () => {
     setOpenId(null);
@@ -83,9 +89,7 @@ function Posts({userData=null}) {
       const callback = entries=>{
         try{
           entries.forEach((element) => {
-              // console.log(element);
               let el = element.target.childNodes[1];
-              // console.log(el);
               el.play().then(()=>{
                   //if this video is not in viewport then pause it
                   if(!el.paused && !element.isIntersecting)
@@ -100,13 +104,13 @@ function Posts({userData=null}) {
           console.log(e);
         }
     }
+    
     const observer = new IntersectionObserver(callback,{ threshold:0.8 });
     useEffect(()=>{
       let parr=[];
       const unsub = database.posts.orderBy('createdAt','desc').onSnapshot(querySnapshot=>{
         parr=[];
         querySnapshot.forEach((doc)=>{
-          // console.log(doc.data(),+"  "+doc.id);
           let data = {...doc.data(),postId:doc.id}
           parr.push(data)
         })
@@ -141,9 +145,9 @@ function Posts({userData=null}) {
                     </div>
                     <h4>{post.uName}</h4>
                   </div>
-                  <Video source={post.pUrl} id={post.pId}/>
-                  {/* <Likes userData={userData} postData={post}/> */}
-                  <ChatBubbleIcon onClick={() => handleClickOpen(post.pId)} className={`${classes.ci} icon-styling`} />
+                  <Video source={post.pUrl} id={post.pId} />
+                  <Likes userData={userData} postData={post}/>
+                  <ChatBubbleIcon onClick={() => handleClickOpen(post.pId)} className={`${classes.ci} `} />
                       <Dialog maxWidth="md" onClose={handleClose} aria-labelledby="customized-dialog-title" open={openId === post.pId}>
                         <MuiDialogContent>
                           <div className='dcontainer'>
@@ -171,7 +175,7 @@ function Posts({userData=null}) {
                                 <hr style={{ border: "none", height: "1px", color: "#dfe6e9", backgroundColor: "#dfe6e9" }} />
                                 <CardContent className={classes.seeComments}>
                                   
-                                {/* <Comments userData={userData} postData={post} /> */}
+                                <Comments userData={userData} postData={post} />
                                 </CardContent>
                                 
                               </Card>
@@ -179,7 +183,7 @@ function Posts({userData=null}) {
                               <div className='likes'>
                                 <Typography className={classes.typo} variant='body2'>Liked By {post.likes.length == 0 ? 'nobody' : ` others`}</Typography>
                                 </div>
-                                {/* <AddComment  userData={userData} postData={post}/>  */}
+                                <AddComment  userData={userData} postData={post}/> 
                                 </div>
                             </div>
                           </div>

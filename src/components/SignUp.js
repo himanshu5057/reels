@@ -6,32 +6,48 @@ import TextField from '@material-ui/core/TextField';
 import logo from './personlogo.jpg'
 import { display } from '@material-ui/system';
 import { useHistory } from 'react-router-dom';
+import Error from './Error';
 const useStyles = makeStyles((theme) => ({
     container: {
         overflow: "hidden",
         // backgroundColor: "#C6FFDD",
-        backgroundColor: "#5c57a6",
+        // backgroundColor: "#5c57a6",
+        backgroundColor:"#253f52",
         height: "100vh",
         width: "100vw",
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        flexDirection:"row",
+        // justifyContent: "center",
+        // alignItems: "center",
         margin: "0px",
         padding: "0px"
+    },
+
+    left:{
+        width:"60%",
+        height:"100%",
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
 
     },
+    right:{
+        width:"40%",
+        height:"100%",
+    },
     form: {
+        position:"relative",
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
-        width: "40%",
+        width: "100%",
         height: "100%",
         // padding: "5%",
         // paddingLeft:"7%",
         borderRadius: "00px",
         backgroundColor: "#e2e7f4",
-        marginLeft: "60%"
+        // marginLeft: "60%"
 
     },
 
@@ -63,8 +79,10 @@ const useStyles = makeStyles((theme) => ({
         "&:hover":{
             cursor:"pointer"
         }
-
-
+    },
+    signin:{
+        display:"flex",
+        flexDirection:"row"
     }
 
 
@@ -104,10 +122,10 @@ function SignUp() {
                 // console.log('Upload is ' + progress + '% done');
             }
             function fn2(error) {
-                setError(error);
+                setError(error.message);
                 setTimeout(() => {
                     setError("");
-                }, 2000);
+                }, 3000);
                 setLoading(false);
             }
             async function fn3() {
@@ -124,10 +142,10 @@ function SignUp() {
                 setLoading(false);
             }
         } catch (e) {
-            setError(e)
+            setError(e.message)
             setTimeout(() => {
                 setError("");
-            }, 2000);
+            }, 3000);
             setLoading(false);
         }
     }
@@ -145,28 +163,40 @@ function SignUp() {
     }, [currentUser])
     return (
         <div className={classes.container} >
-            <div className={classes.form}>
-                    <input type="file" id="file" accept="image/*" ref={inputFile} onChange={handleProfileImage} style={{ display: "none" }} />
-                    {/* <input type="file"  onChange={handleProfileImage}></input> */}
-                    <img className={classes.addDp} onClick={() => { inputFile.current.click(); }} src={dp == null ? logo : URL.createObjectURL(dp)} ></img>
-                
-                <form onSubmit={handleSignup}>
-
-                    <div className={classes.TextField}>
-                        <TextField size="small" id="outlined-basic" label="Username" variant="outlined" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    </div>
-                    <div className={classes.TextField}>
-                        <TextField size="small" type="text" value={email} onChange={(e) => setEmail(e.target.value)} id="outlined-basic" label="Email" variant="outlined" />
-                    </div>
-                    <div className={classes.TextField}>
-                        <TextField size="small" id="outlined-basic" label="Password" variant="outlined" type="password" value={pswd} onChange={(e) => setPswd(e.target.value)} />
-
-                    </div>
-                </form>
-
-                <button className={classes.signup} type="submit" disabled={isLoading} onClick={handleSignup} >Signup</button>
-
+            <div className={classes.left}>
+                <img src="https://cdn.dribbble.com/users/652746/screenshots/1773134/kino_01.gif" width="500px" height="500px" alt ="Height"></img>
+            
             </div>
+            <div className={classes.right}>
+                <div className={classes.form}>
+                <Error classN="signup" error={error}></Error>
+                        <input type="file" id="file" accept="image/*" ref={inputFile} onChange={handleProfileImage} style={{ display: "none" }} />
+                        {/* <input type="file"  onChange={handleProfileImage}></input> */}
+                        <img className={classes.addDp} onClick={() => { inputFile.current.click(); }} src={dp == null ? logo : URL.createObjectURL(dp)} ></img>
+                    
+                    <form onSubmit={handleSignup}>
+
+                        <div className={classes.TextField}>
+                            <TextField size="small" id="outlined-basic" label="Username" variant="outlined" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                        </div>
+                        <div className={classes.TextField}>
+                            <TextField size="small" type="text" value={email} onChange={(e) => setEmail(e.target.value)} id="outlined-basic" label="Email" variant="outlined" />
+                        </div>
+                        <div className={classes.TextField}>
+                            <TextField size="small" id="outlined-basic" label="Password" variant="outlined" type="password" value={pswd} onChange={(e) => setPswd(e.target.value)} />
+
+                        </div>
+                    </form>
+
+                    <button className={classes.signup} type="submit" disabled={isLoading} onClick={handleSignup} >Signup</button>
+                    
+                    <div className={classes.signin}>
+                        <h5>Don't have an account?</h5>
+                        <h5 onClick={()=>{history.push('/signin')}} style={{color: "blue",paddingLeft:"5px",cursor:"pointer"}}>Sign In</h5>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     )
 }

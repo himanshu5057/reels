@@ -11,6 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { auth } from './firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,10 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogout=()=>{
+    setAnchorEl(null);
+    auth.signOut();
+  }
 
   return (
     <div className={classes.root}>
@@ -75,7 +80,7 @@ function Navbar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           )}

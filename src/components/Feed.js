@@ -94,14 +94,14 @@ function Feed() {
                 let downloadUrl = await uploadTaskListener.snapshot.ref.getDownloadURL();
                 // console.log(downloadUrl);
                 let obj = {
-                    comments: [],
-                    likes: [],
-                    pId: id,
-                    pUrl: downloadUrl,
-                    uName: userData?.userName,
-                    createdAt: database.getCurrentTimeStamp(),
-                    profileUrl: userData.profileUrl,
-                    uid: userData?.uid,
+                    comments: [],                                        //all comments
+                    likes: [],                                           //liked by people
+                    pId: id,                                             //post id
+                    pUrl: downloadUrl,                                   //postUrl
+                    uName: userData?.userName,                           //name          
+                    createdAt: database.getCurrentTimeStamp(),           //post upload time
+                    profileUrl: userData.profileUrl,                     //profilePhoto
+                    uid: userData?.uid,                                  //User id
                 }
                 let ref = await database.posts.add(obj);
                 await database.users.doc(userData.uid).update({
@@ -145,7 +145,7 @@ function Feed() {
                                 </Button></label>
                         </div>
                         {isUploading ? <LinearProgress color='secondary' style={{ marginBottom:"2%" ,width:"40%", marginLeft:"12%"}} /> : <></>}
-                        <Posts/>
+                        <Posts userData={userData}/>
                     </div>
             }
         </div>
