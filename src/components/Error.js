@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 function Error({ error = "",classN="signin" }) {
     const classes = useStyles();
-    console.log(classN);
+    // console.log(classN);
     return (
         error != "" ?
         

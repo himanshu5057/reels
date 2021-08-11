@@ -31,7 +31,7 @@ function AddComment({userData=null , postData=null}) {
             })
         })
         .catch(e=>{
-            console.log(e+" ");
+            // console.log(e+" ");
         })
         setText('');
     }

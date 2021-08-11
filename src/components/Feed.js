@@ -9,6 +9,7 @@ import Ioa from './Ioa';
 import { v4 as uuidv4 } from 'uuid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Posts from './Posts';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +53,7 @@ function Feed() {
         try {
             setUploading(true);
             if (!file) {
+                setUploading(false);
                 setError("Please select a file");
                 setTimeout(() => {
                     setError("");
@@ -59,6 +61,7 @@ function Feed() {
                 return;
             }
             if (file.size / (1024 * 1024) > 100) {
+                setUploading(false);
                 setError("Selected file is too big");
                 setTimeout(() => {
                     setError("");
@@ -66,7 +69,10 @@ function Feed() {
                 return;
             }
             if (types.indexOf(file.type) == -1) {
+                setUploading(false);
                 setError("Please select a video file");
+                // console.log("err");
+                
                 setTimeout(() => {
                     setError("");
                 }, 2000);
@@ -80,11 +86,11 @@ function Feed() {
                 // Observe state change events such as progress, pause, and resume
                 // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
+                // console.log('Upload is ' + progress + '% done');
             }
             function fn2(error) {
-                setError(error);
-                console.log(error);
+                setError(error.message);
+                // console.log(error);
                 setTimeout(() => {
                     setError("");
                 }, 2000);
@@ -111,8 +117,8 @@ function Feed() {
             }
         }
         catch (e) {
-            console.log(e);
-            setError(e);
+            // console.log(e.message);
+            setError(e.message);
             setUploading(false);
             setTimeout(()=>{
                 setError(null);
@@ -120,10 +126,10 @@ function Feed() {
         }
     }
     useEffect(() => {
-        console.log(currentUser.uid);
+        // console.log(currentUser.uid);
         const unsub = database.users.doc(currentUser.uid).onSnapshot((doc) => {
             setUserData(doc.data());
-            console.log(doc.data());
+            // console.log(doc.data());
         });
     }, [currentUser])
     return (
@@ -144,7 +150,7 @@ function Feed() {
                                     Add Video
                                 </Button></label>
                         </div>
-                        {isUploading ? <LinearProgress color='secondary' style={{ marginBottom:"2%" ,width:"40%", marginLeft:"12%"}} /> : <></>}
+                        {isUploading ? <LinearProgress color='secondary' style={{ marginBottom:"2%" ,width:"40%", marginLeft:"12%"}} />:error?<Alert variant="filled" severity="error">{error}</Alert>: <></>}
                         <Posts userData={userData}/>
                     </div>
             }

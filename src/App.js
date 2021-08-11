@@ -13,7 +13,6 @@ function App() {
     <Router>
       <SignMethod>
         <Switch>
-          {console.log("Hello")}
           <PrivateRoute exact path="/" component={Feed}></PrivateRoute>
           <Route path="/signin" component={Signin}></Route>
           <Route path="/signup" component={SignUp}></Route>

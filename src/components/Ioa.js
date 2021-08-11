@@ -10,7 +10,7 @@ function Ioa() {
         entries.forEach(element => {
             // console.log(element);
             let vidElement=element.target.childNodes[0];
-            console.log(vidElement);
+            // console.log(vidElement);
             vidElement.play().then(()=>{
                 if(!vidElement.paused && !element.isIntersecting){
                     vidElement.pause();

@@ -23,7 +23,7 @@ function Video(props) {
             e.target.muted = true;
         }}
         catch(e){
-            console.log(e);
+            // console.log(e);
         }
     }
     return (

@@ -19,7 +19,7 @@ function SignMethod({ children }) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             setCurrentUser(user);
-            console.log(user);
+            // console.log(user);
             setLoader(false);
         });
         return()=>{
@@ -27,7 +27,7 @@ function SignMethod({ children }) {
         }
     },[] )}
     catch(e){
-        console.log(e);
+        // console.log(e);
     }
     const value={
         currentUser,

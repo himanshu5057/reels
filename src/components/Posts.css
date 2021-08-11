@@ -12,14 +12,14 @@
     /* margin-bottom: 5vh; */
     object-fit: contain;
     background-color: rgb(20, 20, 20);
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    /* border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; */
 
 }
 
 .videos{
     position: relative;
-    margin-top: 0.5%;
+    margin-top: 2%;
     height: 82vh;
     width: 30vw;
     border-radius: 5px;

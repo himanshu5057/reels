@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
+    paddingLeft:"50px",
+    fontFamily:' "Courgette" , cursive',
+    fontSize:"30px",
     flexGrow: 1,
   },
   bar:{
@@ -51,7 +54,7 @@ function Navbar() {
       <AppBar className={classes.bar} position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Instagram
+            Reels
           </Typography>
           { (
             <div>
@@ -79,7 +82,7 @@ function Navbar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>

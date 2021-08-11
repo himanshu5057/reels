@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
-import Card from '@material-ui/core/Card';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
@@ -51,9 +50,9 @@ const useStyles = makeStyles((theme)=>({
     },
     ci:{
     
-      color: 'blue',
       left:'9%',
-      cursor:'pointer'
+      cursor:'pointer',
+      paddingLeft:"20px"
     },
     mn:{
       color:'white',
@@ -66,6 +65,15 @@ const useStyles = makeStyles((theme)=>({
     avatar:{
       paddingLeft:"2%",
       // height:theme.spacing(7),
+    },
+    likeComment:{
+      display:"flex",
+      padding:"4px",
+      backgroundColor:"whiteSmoke",
+      borderWidth: "2px",
+      borderStyle: "solid",
+      borderColor: "rgb(173, 173, 173)",
+      borderTop: "none",
     }
   
   }));
@@ -101,7 +109,7 @@ function Posts({userData=null}) {
           });
         }
         catch(e){
-          console.log(e);
+          // console.log(e);
         }
     }
     
@@ -146,8 +154,9 @@ function Posts({userData=null}) {
                     <h4>{post.uName}</h4>
                   </div>
                   <Video source={post.pUrl} id={post.pId} />
-                  <Likes userData={userData} postData={post}/>
-                  <ChatBubbleIcon onClick={() => handleClickOpen(post.pId)} className={`${classes.ci} `} />
+                  <div className={classes.likeComment}>
+                  <Likes userData={userData} postData={post}  />
+                  <ChatBubbleOutlineIcon onClick={() => handleClickOpen(post.pId)} className={`${classes.ci} `} /></div>
                       <Dialog maxWidth="md" onClose={handleClose} aria-labelledby="customized-dialog-title" open={openId === post.pId}>
                         <MuiDialogContent>
                           <div className='dcontainer'>

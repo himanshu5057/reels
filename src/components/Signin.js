@@ -106,10 +106,10 @@ function Signin() {
             else{
                 setError(err.message);
             }
-            console.log(err);
+            // console.log(err);
             setTimeout(() => {
                 setError("");
-            }, 300000);
+            }, 3000);
             setLoading(false);
         }
     }
